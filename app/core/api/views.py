@@ -14,8 +14,6 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
-from core.models import WinType
-
 from ..models import Affiliate
 from ..models import Affiliation
 from ..models import CheckType
@@ -37,6 +35,7 @@ from ..models import Referrer
 from ..models import ReferrerType
 from ..models import Sdg
 from ..models import Skill
+from ..models import SocBroad
 from ..models import SocMajor
 from ..models import SocMinor
 from ..models import StackElement
@@ -46,6 +45,8 @@ from ..models import UrlType
 from ..models import UserCheck
 from ..models import UserPermission
 from ..models import UserStatusType
+from ..models import Win
+from ..models import WinType
 from .serializers import AffiliateSerializer
 from .serializers import AffiliationSerializer
 from .serializers import CheckTypeSerializer
@@ -67,6 +68,7 @@ from .serializers import ReferrerSerializer
 from .serializers import ReferrerTypeSerializer
 from .serializers import SdgSerializer
 from .serializers import SkillSerializer
+from .serializers import SocBroadSerializer
 from .serializers import SocMajorSerializer
 from .serializers import SocMinorSerializer
 from .serializers import StackElementSerializer
@@ -77,6 +79,7 @@ from .serializers import UserCheckSerializer
 from .serializers import UserPermissionSerializer
 from .serializers import UserSerializer
 from .serializers import UserStatusTypeSerializer
+from .serializers import WinSerializer
 from .serializers import WinTypeSerializer
 
 
@@ -437,6 +440,20 @@ class UserPermissionViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 @extend_schema_view(
+    list=extend_schema(description="Return a list of all SOC broad occupations"),
+    create=extend_schema(description="Create a new SOC broad occupation"),
+    retrieve=extend_schema(description="Return the details of a SOC broad occupation"),
+    destroy=extend_schema(description="Delete a SOC broad occupation"),
+    update=extend_schema(description="Update a SOC broad occupation"),
+    partial_update=extend_schema(description="Patch a SOC broad occupation"),
+)
+class SocBroadViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = SocBroad.objects.select_related("soc_minor").all().order_by("title")
+    serializer_class = SocBroadSerializer
+
+
+@extend_schema_view(
     list=extend_schema(description="Return a list of all the soc majors"),
     create=extend_schema(description="Create a new soc major"),
     retrieve=extend_schema(description="Return the details of a soc major"),
@@ -597,6 +614,12 @@ class UserCheckViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = UserCheck.objects.all()
     serializer_class = UserCheckSerializer
+
+
+class WinViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    queryset = Win.objects.all().order_by("-created_at")
+    serializer_class = WinSerializer
 
 
 class WinTypeViewSet(viewsets.ModelViewSet):
