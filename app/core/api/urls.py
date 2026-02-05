@@ -1,6 +1,7 @@
 from django.urls import path
 from rest_framework import routers
 
+from .views import AccomplishmentViewSet
 from .views import AffiliateViewSet
 from .views import AffiliationViewSet
 from .views import CheckTypeViewSet
@@ -23,6 +24,7 @@ from .views import ReferrerViewSet
 from .views import SdgViewSet
 from .views import SkillViewSet
 from .views import SocBroadViewSet
+from .views import SocDetailedViewSet
 from .views import SocMajorViewSet
 from .views import SocMinorViewSet
 from .views import StackElementTypeViewSet
@@ -70,6 +72,7 @@ router.register(r"project-urls", ProjectUrlViewSet, basename="project-url")
 router.register(r"soc-broads", SocBroadViewSet, basename="soc-broad")
 router.register(r"soc-majors", SocMajorViewSet, basename="soc-major")
 router.register(r"soc-minors", SocMinorViewSet, basename="soc-minor")
+router.register(r"soc-detailed", SocDetailedViewSet, basename="soc-detailed")
 router.register(r"url-types", UrlTypeViewSet, basename="url-type")
 router.register(
     r"user-status-types", UserStatusTypeViewSet, basename="user-status-type"
@@ -80,6 +83,7 @@ router.register(
     basename="project-stack-element",
 )
 router.register(r"url-status-types", UrlStatusTypeViewSet, basename="url-status-type")
+router.register(r"accomplishments", AccomplishmentViewSet, basename="accomplishment")
 router.register(r"organizations", OrganizationViewSet, basename="organization")
 router.register(r"user-checks", UserCheckViewSet, basename="user-check")
 router.register(r"wins", WinViewSet, basename="win")

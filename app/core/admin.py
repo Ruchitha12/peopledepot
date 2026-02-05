@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm as DefaultUserCreationFor
 from django.contrib.auth.forms import UsernameField
 from django.utils.translation import gettext_lazy as _
 
+from .models import Accomplishment
 from .models import Affiliate
 from .models import Affiliation
 from .models import CheckType
@@ -28,6 +29,7 @@ from .models import ReferrerType
 from .models import Sdg
 from .models import Skill
 from .models import SocBroad
+from .models import SocDetailed
 from .models import SocMajor
 from .models import SocMinor
 from .models import StackElement
@@ -297,6 +299,13 @@ class SocMinorAdmin(admin.ModelAdmin):
     list_display = ("soc_major", "occ_code", "title")
 
 
+@admin.register(SocDetailed)
+class SocDetailedAdmin(admin.ModelAdmin):
+    list_display = ("occ_code", "title", "soc_broad", "created_at")
+    search_fields = ("occ_code", "title", "soc_broad__title")
+    list_filter = ("soc_broad",)
+
+
 @admin.register(UrlType)
 class UrlTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "description")
@@ -339,6 +348,17 @@ class ProjectStackElementXrefAdmin(admin.ModelAdmin):
 @admin.register(UrlStatusType)
 class UrlStatusTypeAdmin(admin.ModelAdmin):
     list_display = ("name", "description")
+
+
+@admin.register(Accomplishment)
+class AccomplishmentAdmin(admin.ModelAdmin):
+    list_display = (
+        "title",
+        "project",
+        "accomplished_on",
+        "created_at",
+    )
+    list_filter = ("project", "accomplished_on")
 
 
 @admin.register(Organization)

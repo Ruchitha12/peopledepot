@@ -4,6 +4,7 @@ from rest_framework.test import APIClient
 from constants import admin_project
 from constants import practice_lead_project
 
+from ..models import Accomplishment
 from ..models import Affiliate
 from ..models import Affiliation
 from ..models import CheckType
@@ -26,6 +27,7 @@ from ..models import ReferrerType
 from ..models import Sdg
 from ..models import Skill
 from ..models import SocBroad
+from ..models import SocDetailed
 from ..models import SocMajor
 from ..models import SocMinor
 from ..models import StackElement
@@ -357,6 +359,16 @@ def soc_minor():
 
 
 @pytest.fixture
+def soc_detailed(soc_broad):
+    return SocDetailed.objects.create(
+        soc_broad=soc_broad,
+        occ_code="15-1252",
+        title="Software Developers",
+        description="Develop and maintain software systems.",
+    )
+
+
+@pytest.fixture
 def url_type():
     return UrlType.objects.create(
         name="This is a test url type name",
@@ -414,6 +426,17 @@ def project_stack_element_xref(project, stack_element):
 def url_status_type(db):
     return UrlStatusType.objects.create(
         name="active", description="URL is live and valid"
+    )
+
+
+@pytest.fixture
+def accomplishment(project):
+    return Accomplishment.objects.create(
+        project=project,
+        title="Test Accomplishment",
+        description="This is a test accomplishment",
+        url="https://example.com",
+        accomplished_on="2025-09-11T18:05:00Z",
     )
 
 

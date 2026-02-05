@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from timezone_field.rest_framework import TimeZoneSerializerField
 
+from core.models import Accomplishment
 from core.models import Affiliate
 from core.models import Affiliation
 from core.models import CheckType
@@ -23,6 +24,7 @@ from core.models import ReferrerType
 from core.models import Sdg
 from core.models import Skill
 from core.models import SocBroad
+from core.models import SocDetailed
 from core.models import SocMajor
 from core.models import SocMinor
 from core.models import StackElement
@@ -461,6 +463,21 @@ class SocMinorSerializer(serializers.ModelSerializer):
         read_only_fields = ("uuid", "created_at", "updated_at")
 
 
+class SocDetailedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SocDetailed
+        fields = (
+            "uuid",
+            "soc_broad",
+            "occ_code",
+            "title",
+            "description",
+            "created_at",
+            "updated_at",
+        )
+        read_only_fields = ("uuid", "created_at", "updated_at")
+
+
 class UrlTypeSerializer(serializers.ModelSerializer):
     """Used to retrieve url_type info"""
 
@@ -546,6 +563,28 @@ class UrlStatusTypeSerializer(serializers.ModelSerializer):
         model = UrlStatusType
         fields = ("uuid", "name", "description", "created_at", "updated_at")
         read_only_fields = ("uuid", "created_at", "updated_at")
+
+
+class AccomplishmentSerializer(serializers.ModelSerializer):
+    """Used to retrieve accomplishment info"""
+
+    class Meta:
+        model = Accomplishment
+        fields = (
+            "uuid",
+            "created_at",
+            "updated_at",
+            "project",
+            "title",
+            "description",
+            "url",
+            "accomplished_on",
+        )
+        read_only_fields = (
+            "uuid",
+            "created_at",
+            "updated_at",
+        )
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
